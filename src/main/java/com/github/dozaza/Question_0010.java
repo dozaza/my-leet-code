@@ -63,8 +63,8 @@ package com.github.dozaza;
 public class Question_0010 {
 
     public static void main(String[] args) {
-        String s = "aab";
-        String p = "*c";
+        String s = "ab";
+        String p = ".*";
         boolean res = isMatch(s, p);
         System.out.println(res);
     }
@@ -72,20 +72,20 @@ public class Question_0010 {
     public static boolean isMatch(String s, String p) {
         /**
          * 1. p[j] == s[i] || p[j] == '.':
-         *      dp[i][j] = dp[i-1][j-1]
+         *      dp[i + 1][j + 1] = dp[i][j]
          * 2. p[j] == '*':
-         *  2.1 p[j-1] != s[i]:
-         *      dp[i][j] = dp[i][j-2]
-         *  2.2 p[i-1] == s[i] or p[i-1] == '.':
-         *      dp[i][j] = dp[i-1][j] // 多个a的情况
-         *      || dp[i][j-1] // 单个a的情况
-         *      || dp[i][j-2] // 没有a的情况
+         *  2.1 p[j-1] == s[i] || p[j-1] == '.':   // '.' 与 p[j-1] 需要先判断
+         *      dp[i + 1][j + 1] = dp[i][j + 1]   // 多个a的情况
+         *          || dp[i + 1][j]       // 单个a的情况
+         *          || dp[i + 1][j - 1]       // 没有a的情况
+         *  2.2 p[j-1] != s[i]:
+         *      dp[i + 1][j + 1] = dp[i + 1][j - 1]
          */
         int sLen = s.length();
         int pLen = p.length();
         char[] sArray = s.toCharArray();
         char[] pArray = p.toCharArray();
-        boolean[][] dp = new boolean[sLen+1][pLen+1];
+        boolean[][] dp = new boolean[sLen + 1][pLen + 1];
 
         dp[0][0] = true;
         for (int i = 0; i < pLen; i++) {
@@ -100,12 +100,12 @@ public class Question_0010 {
                     dp[i + 1][j + 1] = dp[i][j];
                 } else if (pArray[j] == '*'){
                     if (j == 0) {
-                        dp[i][j] = true;
+                        dp[i + 1][j + 1] = true;
                     } else {
-                        if (pArray[j - 1] != sArray[i]) {
+                        if (pArray[j - 1] == sArray[i] || pArray[j - 1] == '.') {
+                            dp[i + 1][j + 1] = dp[i][j + 1] || dp[i + 1][j] || dp[i + 1][j - 1];
+                        } else if (pArray[j - 1] != sArray[i]) {
                             dp[i + 1][j + 1] = dp[i + 1][j - 1];
-                        } else if (pArray[i - 1] == sArray[i] || pArray[j] == '.') {
-                            dp[i + 1][j + 1] = dp[i][j+1] || dp[i + 1][j] || dp[i + 1][j - 1];
                         }
                     }
                 }
