@@ -87,6 +87,7 @@ public class Question_0010 {
         char[] pArray = p.toCharArray();
         boolean[][] dp = new boolean[sLen + 1][pLen + 1];
 
+
         dp[0][0] = true;
         for (int i = 0; i < pLen; i++) {
             if (pArray[i] == '*' && (i == 0 || dp[0][i - 1])) {
@@ -108,6 +109,7 @@ public class Question_0010 {
                             dp[i + 1][j + 1] = dp[i + 1][j - 1];
                         }
                     }
+
                 }
             }
         }
