@@ -15,7 +15,6 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
-import tensorflow as tf
 from typing import List
 
 class Solution:
