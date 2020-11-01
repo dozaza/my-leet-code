@@ -76,5 +76,4 @@ class Solution:
 
 if __name__ == '__main__':
     s = Solution()
-    l = ListNode(1, ListNode(2, ListNode(1, L)))
 # leetcode submit region end(Prohibit modification and deletion)
