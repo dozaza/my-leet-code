@@ -29,7 +29,7 @@
 from typing import List
 
 class Solution:
-    # return list(set(nums1) & set(nums2))
+    # 350return list(set(nums1) & set(nums2))
     def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
         if nums1 is None:
             nums1 = []
